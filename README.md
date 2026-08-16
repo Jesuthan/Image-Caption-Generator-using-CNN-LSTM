@@ -1,7 +1,8 @@
-
 # 🧠 Image Caption Generator using CNN-LSTM
 
-This project implements an **Image Caption Generator** using a **deep learning architecture** that combines **Convolutional Neural Networks (CNN)** for image feature extraction and **Long Short-Term Memory (LSTM)** networks for generating natural language captions. This was developed as part of the **EC9170 - Deep Learning** course.
+An **Image Caption Generator** built with a deep learning architecture that combines **Convolutional Neural Networks (CNN)** for image feature extraction and **Long Short-Term Memory (LSTM)** networks for generating natural language captions.
+
+Developed for **EC9170 – Deep Learning**, University of Jaffna.
 
 ---
 
@@ -11,18 +12,24 @@ This project implements an **Image Caption Generator** using a **deep learning a
 - CNN feature extraction using **InceptionV3**
 - Sequence modeling with **LSTM**
 - Caption generation using greedy search
-- Visualization of images with generated captions
+- Visualization of images alongside their generated captions
 
 ---
 
-## 📁 Project Structure
+## 📁 Repository Contents
 
 ```
-├── Deeplearning.ipynb        # Main Jupyter notebook for training and testing
-├── images/                   # Image dataset (8091 images)
-├── captions.txt              # Text file with 5 captions per image
-├── model/                    # (Optional) Trained model files
-├── outputs/                  # (Optional) Generated captions and visualizations
+├── CNN-LSTM.ipynb          # Initial merged CNN + LSTM implementation
+├── CNN-LSTM_final.ipynb    # Final training and inference notebook  ← start here
+├── CNN-separate.ipynb      # CNN feature extraction run separately
+└── README.md
+```
+
+The dataset is **not** committed to this repository. Before running, place it alongside the notebooks:
+
+```
+├── images/                 # 8,091 Flickr8k images
+└── captions.txt            # 5 captions per image
 ```
 
 ---
@@ -40,29 +47,46 @@ This project implements an **Image Caption Generator** using a **deep learning a
 
 ## 📦 Dataset
 
-- **Images**: 8091 images from the Flickr8k dataset (or similar)
-- **Captions**: Each image is paired with 5 different captions
-- Captions are preprocessed (lowercase, punctuation removal, tokenization)
+- **Images**: 8,091 images from the Flickr8k dataset
+- **Captions**: each image paired with 5 different captions
+- Preprocessing: lowercasing, punctuation removal, tokenization
 
 ---
 
 ## 🚀 Model Workflow
 
-1. **Caption Preprocessing**
-   - Clean text: lowercase, remove punctuation, tokenize
-   - Add `<start>` and `<end>` tokens
+1. **Caption preprocessing** — clean text (lowercase, strip punctuation, tokenize), wrap each caption in `<start>` and `<end>` tokens
+2. **Image feature extraction** — pretrained InceptionV3 produces a 2048-dimensional feature vector per image
+3. **Tokenization & sequencing** — captions converted to integer sequences and padded to uniform length
+4. **CNN-LSTM model** — image features and partial text sequences are merged to predict the next word
+5. **Caption generation** — greedy search decodes a caption word-by-word from the image features
 
-2. **Image Feature Extraction**
-   - Pretrained **InceptionV3** used to extract 2048-dimensional feature vectors
+---
 
-3. **Tokenization & Sequence Creation**
-   - Captions are converted to integer sequences and padded
+## ▶️ How to Run
 
-4. **CNN-LSTM Model**
-   - CNN features and text input are merged to predict the next word
+1. Clone the repository:
 
-5. **Caption Generation**
-   - Uses greedy search to generate a caption word-by-word from image features
+   ```bash
+   git clone https://github.com/Jesuthan/Image-Caption-Generator-using-CNN-LSTM.git
+   cd Image-Caption-Generator-using-CNN-LSTM
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   pip install tensorflow numpy pandas matplotlib scikit-learn pillow
+   ```
+
+3. Add the dataset — download Flickr8k and place `images/` and `captions.txt` in the repository root.
+
+4. Launch Jupyter and open the final notebook:
+
+   ```bash
+   jupyter notebook CNN-LSTM_final.ipynb
+   ```
+
+5. Run all cells in order.
 
 ---
 
@@ -75,56 +99,35 @@ Generated Caption: a dog is running in the field
 
 ---
 
-## 🧪 Evaluation Metrics (Planned)
+## 🧪 Evaluation
 
-- BLEU
-- CIDEr
-- ROUGE
-- METEOR
+Quantitative evaluation is **not yet implemented**. Captions are currently assessed qualitatively by inspecting generated output against the source image.
 
----
-
-## ▶️ How to Run
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/image-caption-generator.git
-   cd image-caption-generator
-   ```
-
-2. Launch Jupyter Notebook:
-   ```bash
-   jupyter notebook
-   ```
-
-3. Open `Deeplearning.ipynb` and run all cells in order.
-
-4. Make sure the following files exist:
-   - `images/` folder with image dataset
-   - `captions.txt` with image IDs and captions
+Planned metrics: BLEU, CIDEr, ROUGE, METEOR.
 
 ---
 
 ## 📈 Future Improvements
 
-- Add evaluation metrics for better performance insights
-- Use **Beam Search** for improved caption generation
-- Deploy model using Streamlit or Flask
+- Implement BLEU/CIDEr/ROUGE/METEOR scoring for measurable performance
+- Replace greedy search with **beam search** for higher-quality captions
+- Add attention (Show, Attend and Tell) over the CNN feature map
+- Deploy as a web demo using Streamlit or Flask
 
 ---
 
-## 📚 Reference
+## 📚 References
 
 - Flickr8k dataset
-- TensorFlow documentation
-- Paper: “Show and Tell: A Neural Image Caption Generator” (Vinyals et al.)
+- TensorFlow / Keras documentation
+- Vinyals et al., *"Show and Tell: A Neural Image Caption Generator"* (2015)
 
 ---
 
-## 👨‍💻 Developed by
+## 👨‍💻 Authors
 
-**Your Name**  
-Anushanth 
-Harshini
-Jesuthan
+Built as a group project for EC9170 – Deep Learning:
 
+- **Anushanth**
+- **Harshini**
+- **Jesuthan** ([@Jesuthan](https://github.com/Jesuthan))
